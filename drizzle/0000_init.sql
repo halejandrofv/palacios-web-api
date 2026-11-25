@@ -1,0 +1,41 @@
+CREATE TABLE `business_profile_submissions` (
+	`id` text PRIMARY KEY NOT NULL,
+	`reference_id` text NOT NULL,
+	`business_structure` text NOT NULL,
+	`services` text NOT NULL,
+	`annual_revenue` text NOT NULL,
+	`team_size` text NOT NULL,
+	`accounting_method` text NOT NULL,
+	`first_name` text NOT NULL,
+	`last_name` text NOT NULL,
+	`email` text NOT NULL,
+	`phone` text NOT NULL,
+	`preferred_contact_method` text NOT NULL,
+	`additional_message` text,
+	`status` text DEFAULT 'new' NOT NULL,
+	`source` text DEFAULT 'website' NOT NULL,
+	`ip_hash` text,
+	`user_agent` text,
+	`created_at` integer DEFAULT (round(unixepoch('subsec') * 1000)) NOT NULL,
+	`updated_at` integer NOT NULL,
+	CONSTRAINT "business_profile_reference_id_length" CHECK(length("business_profile_submissions"."reference_id") <= 18),
+	CONSTRAINT "business_profile_structure_length" CHECK(length("business_profile_submissions"."business_structure") <= 30),
+	CONSTRAINT "business_profile_services_array" CHECK(json_valid("business_profile_submissions"."services") AND json_type("business_profile_submissions"."services") = 'array'),
+	CONSTRAINT "business_profile_revenue_length" CHECK(length("business_profile_submissions"."annual_revenue") <= 20),
+	CONSTRAINT "business_profile_team_length" CHECK(length("business_profile_submissions"."team_size") <= 20),
+	CONSTRAINT "business_profile_accounting_length" CHECK(length("business_profile_submissions"."accounting_method") <= 30),
+	CONSTRAINT "business_profile_first_name_length" CHECK(length("business_profile_submissions"."first_name") <= 100),
+	CONSTRAINT "business_profile_last_name_length" CHECK(length("business_profile_submissions"."last_name") <= 100),
+	CONSTRAINT "business_profile_email_length" CHECK(length("business_profile_submissions"."email") <= 254),
+	CONSTRAINT "business_profile_phone_length" CHECK(length("business_profile_submissions"."phone") <= 16),
+	CONSTRAINT "business_profile_contact_method_length" CHECK(length("business_profile_submissions"."preferred_contact_method") <= 10),
+	CONSTRAINT "business_profile_message_length" CHECK(length("business_profile_submissions"."additional_message") <= 1200),
+	CONSTRAINT "business_profile_status_length" CHECK(length("business_profile_submissions"."status") <= 20),
+	CONSTRAINT "business_profile_source_length" CHECK(length("business_profile_submissions"."source") <= 20),
+	CONSTRAINT "business_profile_ip_hash_length" CHECK(length("business_profile_submissions"."ip_hash") <= 64),
+	CONSTRAINT "business_profile_user_agent_length" CHECK(length("business_profile_submissions"."user_agent") <= 500)
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `business_profile_submissions_reference_id_key` ON `business_profile_submissions` (`reference_id`);--> statement-breakpoint
+CREATE INDEX `business_profile_submissions_created_at_idx` ON `business_profile_submissions` (`created_at`);--> statement-breakpoint
+CREATE INDEX `business_profile_submissions_status_idx` ON `business_profile_submissions` (`status`);

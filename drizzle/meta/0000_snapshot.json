@@ -1,0 +1,251 @@
+{
+  "version": "6",
+  "dialect": "sqlite",
+  "id": "d87f886c-8d41-4c3b-afc0-dc2487080839",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "tables": {
+    "business_profile_submissions": {
+      "name": "business_profile_submissions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reference_id": {
+          "name": "reference_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "business_structure": {
+          "name": "business_structure",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "services": {
+          "name": "services",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "annual_revenue": {
+          "name": "annual_revenue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "team_size": {
+          "name": "team_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "accounting_method": {
+          "name": "accounting_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "first_name": {
+          "name": "first_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_name": {
+          "name": "last_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "preferred_contact_method": {
+          "name": "preferred_contact_method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "additional_message": {
+          "name": "additional_message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'new'"
+        },
+        "source": {
+          "name": "source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'website'"
+        },
+        "ip_hash": {
+          "name": "ip_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "user_agent": {
+          "name": "user_agent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(round(unixepoch('subsec') * 1000))"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "business_profile_submissions_reference_id_key": {
+          "name": "business_profile_submissions_reference_id_key",
+          "columns": [
+            "reference_id"
+          ],
+          "isUnique": true
+        },
+        "business_profile_submissions_created_at_idx": {
+          "name": "business_profile_submissions_created_at_idx",
+          "columns": [
+            "created_at"
+          ],
+          "isUnique": false
+        },
+        "business_profile_submissions_status_idx": {
+          "name": "business_profile_submissions_status_idx",
+          "columns": [
+            "status"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "business_profile_reference_id_length": {
+          "name": "business_profile_reference_id_length",
+          "value": "length(\"business_profile_submissions\".\"reference_id\") <= 18"
+        },
+        "business_profile_structure_length": {
+          "name": "business_profile_structure_length",
+          "value": "length(\"business_profile_submissions\".\"business_structure\") <= 30"
+        },
+        "business_profile_services_array": {
+          "name": "business_profile_services_array",
+          "value": "json_valid(\"business_profile_submissions\".\"services\") AND json_type(\"business_profile_submissions\".\"services\") = 'array'"
+        },
+        "business_profile_revenue_length": {
+          "name": "business_profile_revenue_length",
+          "value": "length(\"business_profile_submissions\".\"annual_revenue\") <= 20"
+        },
+        "business_profile_team_length": {
+          "name": "business_profile_team_length",
+          "value": "length(\"business_profile_submissions\".\"team_size\") <= 20"
+        },
+        "business_profile_accounting_length": {
+          "name": "business_profile_accounting_length",
+          "value": "length(\"business_profile_submissions\".\"accounting_method\") <= 30"
+        },
+        "business_profile_first_name_length": {
+          "name": "business_profile_first_name_length",
+          "value": "length(\"business_profile_submissions\".\"first_name\") <= 100"
+        },
+        "business_profile_last_name_length": {
+          "name": "business_profile_last_name_length",
+          "value": "length(\"business_profile_submissions\".\"last_name\") <= 100"
+        },
+        "business_profile_email_length": {
+          "name": "business_profile_email_length",
+          "value": "length(\"business_profile_submissions\".\"email\") <= 254"
+        },
+        "business_profile_phone_length": {
+          "name": "business_profile_phone_length",
+          "value": "length(\"business_profile_submissions\".\"phone\") <= 16"
+        },
+        "business_profile_contact_method_length": {
+          "name": "business_profile_contact_method_length",
+          "value": "length(\"business_profile_submissions\".\"preferred_contact_method\") <= 10"
+        },
+        "business_profile_message_length": {
+          "name": "business_profile_message_length",
+          "value": "length(\"business_profile_submissions\".\"additional_message\") <= 1200"
+        },
+        "business_profile_status_length": {
+          "name": "business_profile_status_length",
+          "value": "length(\"business_profile_submissions\".\"status\") <= 20"
+        },
+        "business_profile_source_length": {
+          "name": "business_profile_source_length",
+          "value": "length(\"business_profile_submissions\".\"source\") <= 20"
+        },
+        "business_profile_ip_hash_length": {
+          "name": "business_profile_ip_hash_length",
+          "value": "length(\"business_profile_submissions\".\"ip_hash\") <= 64"
+        },
+        "business_profile_user_agent_length": {
+          "name": "business_profile_user_agent_length",
+          "value": "length(\"business_profile_submissions\".\"user_agent\") <= 500"
+        }
+      }
+    }
+  },
+  "views": {},
+  "enums": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "indexes": {}
+  }
+}
